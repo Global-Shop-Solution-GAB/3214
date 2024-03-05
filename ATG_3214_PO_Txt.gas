@@ -1,0 +1,39 @@
+Program.Sub.ScreenSU.Start
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'Coded by: MLA
+'Project Start Date: 2/11/2011
+' hooks
+'  17160,16890, 16850, 17050
+'DIVERSIFIED DISTRIBUTION
+V.Local.sFile.Declare(String)
+V.Local.sPO.Declare(String)
+V.Local.sPOLine.Declare(String)
+
+F.Intrinsic.Control.If(V.Caller.Hook,=,"16890")
+	F.Intrinsic.Control.If(V.Passed.000008,<>,"0")
+		F.Intrinsic.String.LPad(V.Passed.000008,0,7,V.Local.sPO)
+		V.Local.sPOLine.Set("")
+		F.Intrinsic.String.Concat(V.Caller.PluginsDir,"\POText.exe ",V.Local.sPO,"*!*",V.Local.sPOLine,"*!*",V.Caller.PluginsDir,"\PO_Text.mdb",V.Local.sFile)
+		F.Intrinsic.Task.LaunchSync(V.Local.sFile,555)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.ElseIf(V.Caller.Hook,=,"17160")
+	V.Local.sPO.Set(V.Passed.008002)
+	V.Local.sPOLine.Set(V.Passed.008001)
+	F.Intrinsic.String.Concat(V.Caller.PluginsDir,"\POText.exe ",V.Local.sPO,"*!*",V.Local.sPOLine,"*!*",V.Caller.PluginsDir,"\PO_Text.mdb",V.Local.sFile)
+	F.Intrinsic.Task.LaunchSync(V.Local.sFile,555)
+F.Intrinsic.Control.ElseIf(V.Caller.Hook,=,"17050")
+	V.Passed.000097.Set("PO Text")
+F.Intrinsic.Control.ElseIf(V.Caller.Hook,=,"16850")
+	V.Passed.000065.Set("PO Text")
+F.Intrinsic.Control.EndIf
+
+
+Program.Sub.Main.End
+
+
